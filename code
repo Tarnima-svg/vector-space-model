@@ -1,0 +1,59 @@
+from collections import Counter
+
+# Define stopwords
+stop_words = ['a', 'an', 'and', 'the', 'is', 'are', 'in', 'of', 'for', 'to', 'with']
+
+# Preprocess text
+def preprocess(text):
+    text = text.lower()
+    words = text.split()
+    return [word for word in words if word not in stop_words]
+
+# Calculate term frequency (TF)
+def calculate_tf(doc, term):
+    doc_terms = preprocess(doc)
+    return doc_terms.count(term) / len(doc_terms)
+
+# Calculate document frequency (DF)
+def calculate_df(term, documents):
+    return sum(term in preprocess(doc) for doc in documents)
+
+# Main function
+def main():
+    documents = [
+        "Cat runs behind rat",
+        "Dog runs behind cat"
+    ]
+    query = "rat"
+
+    # Preprocess documents and query
+    preprocessed_docs = [preprocess(doc) for doc in documents]
+    preprocessed_query = preprocess(query)
+
+    # Get unique terms
+    all_terms = set(term for doc in preprocessed_docs for term in doc)
+    all_terms.update(preprocessed_query)
+
+    # Calculate term frequency for documents and query
+    tfs = []
+    query_tf = {term: calculate_tf(" ".join(preprocessed_query), term) for term in preprocessed_query}
+    for doc in preprocessed_docs:
+        doc_tf = {term: calculate_tf(" ".join(doc), term) for term in all_terms}
+        tfs.append(doc_tf)
+
+    # Calculate document frequency
+    N = len(documents)
+    dfs = {term: calculate_df(term, preprocessed_docs) for term in all_terms}
+
+    # Calculate similarity scores
+    similarities = []
+    for doc_tf in tfs:
+        score = sum(doc_tf.get(term, 0) * query_tf.get(term, 0) * (N / dfs[term]) for term in all_terms)
+        similarities.append(score)
+
+    # Print the most relevant document
+    most_relevant_doc_index = similarities.index(max(similarities))
+    print(f"The most relevant document to the query '{query}' is: {documents[most_relevant_doc_index]}")
+
+if __name__ == "__main__":
+    main()
