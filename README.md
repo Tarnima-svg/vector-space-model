@@ -14,19 +14,6 @@ The Vector Space Model is a mathematical model used in information retrieval and
 - Computation of TF-IDF scores for each term in each document.
 - Calculation of cosine similarity between documents and query terms.
 
-## Libraries
-
-1. math
-2. re
-3. collections
-
-## To install these libraries in Python
-1. Open your terminal or command prompt.
-2. Type the following command:  pip install <library_name>
-
-        pip install math
-
-        pip install re
 
 ## Usage
 
