@@ -1,0 +1,68 @@
+Let's break down the steps for implementing the Vector Space Model (VSM)
+
+Prepare Documents and Query:
+Documents: "Cat runs behind rat." and "Dog runs behind cat."
+Query term: "rat."
+
+Tokenization and Preprocessing:
+Documents broken down into words:
+Document 1: ["Cat", "runs", "behind", "rat"]
+Document 2: ["Dog", "runs", "behind", "cat"]
+Query: ["rat"]
+Stopwords, punctuation, and special characters are removed.
+
+Term-Document Matrix (TDM):
+TDM (document-term matrix) created:
++-------------------------------------+
+|  Term   | Document 1	| Document 2 |
+|  Cat	  |      1	    |      0     |
+|  runs	  |      1	    |      1     |
+| behind	|      1	    |      1     |
+|  rat	  |      1	    |      0     |
+|  Dog	  |      0	    |      1     |
++-------------------------------------+
+Total number of documents (N) = 2
+
+Calculate Inverse Document Frequency (IDF):
+Calculate Document Frequency (df) for each term.
+Compute IDF using the formula: IDF = log(N / df).
+
+Calculate TF-IDF:
+Compute Term Frequency (TF) for each term in each document.
+Multiply TF by IDF to get the TF-IDF score for each term in each document.
+
+Cosine Similarity:
+Calculate cosine similarity between each document and the query.
+Compute dot product (x*y) and magnitudes (||x|| and ||y||) for each document-term vector and query-term vector.
+Compute cosine similarity (CS) using the formula: CS = (x * y) / (||x|| * ||y||).
+
+Output:
+Compare cosine similarity scores for each document and the query.
+The document with the higher similarity score is considered more relevant to the query.
+
+e.g.         +-------------------+
+             |   Document 1      |
+             | "Cat runs behind  |
+             |       rat."       |
+             +---------+---------+
+                       |
+                       |    cosine similarity
+                       |    
+                +------v------+
+                |    Query    |
+                |    "rat"    |
+                +------+------+
+                       |
+                       |
+                       |    cosine similarity
+             +---------v---------+
+             |   Document 2      |
+             | "Dog runs behind  |
+             |       cat."       |
+             +-------------------+
+
+In this diagram:
+1. Each rectangle represents a document or the query.
+2. The content of each document or the query is written inside the rectangle.
+3. Arrows indicate the cosine similarity calculation between documents and the query.
+4. The length of the arrows represents the similarity score, with longer arrows indicating higher similarity.
