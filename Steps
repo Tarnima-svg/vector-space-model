@@ -1,4 +1,4 @@
-Let's break down the steps for implementing the Vector Space Model (VSM)
+### Let's break down the steps for implementing the Vector Space Model (VSM)
 
 Prepare Documents and Query:
 Documents: "Cat runs behind rat." and "Dog runs behind cat."
